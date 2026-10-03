@@ -1,0 +1,31 @@
+[file] App.vue (479 bytes)
+[dir]  assets
+[file] assets/logo.png (6849 bytes)
+[dir]  components
+[file] components/HelloWorld.vue (2025 bytes)
+[dir]  components/ui
+[file] components/ui/NxIcon.vue (2327 bytes)
+[dir]  composables
+[file] composables/useVisuals.js (6438 bytes)
+[dir]  config
+[file] config/icons.js (6727 bytes)
+[file] config/options.js (2389 bytes)
+[file] config/palettes.js (1823 bytes)
+[file] config/visualProps.js (4140 bytes)
+[file] main.js (90 bytes)
+[dir]  styles
+[file] styles/base.css (2243 bytes)
+[file] styles/effects.css (6974 bytes)
+[file] styles/tokens.css (5004 bytes)
+[dir]  utils
+[file] utils/color.js (2904 bytes)
+[file] utils/effects.js (7418 bytes)
+--- root of project ---
+[dir]  .git
+[dir]  .refact
+[dir]  Basics
+[dir]  FourWaysToSetVue
+[file] re
+[dir]  reusable-components
+[file] _probe.js
+[file] _probe_out.txt

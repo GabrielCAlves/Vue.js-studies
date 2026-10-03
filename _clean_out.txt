@@ -1,0 +1,17 @@
+deleted re
+--- src tree ---
+479	App.vue
+6849	assets/logo.png
+2025	components/HelloWorld.vue
+2327	components/ui/NxIcon.vue
+6438	composables/useVisuals.js
+6727	config/icons.js
+2389	config/options.js
+1823	config/palettes.js
+4140	config/visualProps.js
+90	main.js
+2243	styles/base.css
+6974	styles/effects.css
+5004	styles/tokens.css
+2904	utils/color.js
+7418	utils/effects.js

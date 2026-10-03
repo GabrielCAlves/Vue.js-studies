@@ -1,0 +1,332 @@
+/* =========================================================================
+   NX Kit — interaction effects
+   Hover behaviours and keyframe animations that every component can opt
+   into through the shared `useVisuals` composable.
+   ========================================================================= */
+
+/* ------------------------------------------------------------------ base */
+.nx-fx {
+  filter: var(--c-filter, none);
+  transform: var(--c-transform, none);
+  box-shadow: var(--c-shadow, none);
+  opacity: var(--c-opacity, 1);
+  mix-blend-mode: var(--c-blend, normal);
+  transition: var(--c-transition, var(--nx-dur) var(--nx-ease));
+  will-change: transform, box-shadow, filter;
+}
+
+.nx-fx--hoverable:hover {
+  background-color: var(--c-hover-bg, var(--c-bg));
+  color: var(--c-hover-fg, var(--c-fg));
+  border-color: var(--c-hover-border, var(--c-bd));
+  box-shadow: var(--c-hover-shadow, var(--c-shadow));
+  filter: var(--c-hover-filter, var(--c-filter));
+  transform: var(--c-hover-transform, var(--c-transform));
+}
+
+/* ------------------------------------------------------------ hover set */
+.nx-hover--none:hover {
+  transform: none !important;
+}
+
+.nx-hover--lift:hover {
+  transform: translate(-3px, -3px) var(--c-scale,);
+  box-shadow: 7px 7px 0 0 var(--nx-line);
+}
+
+.nx-hover--press:hover {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 0 transparent;
+}
+
+.nx-hover--pop:hover {
+  transform: scale(1.06);
+}
+
+.nx-hover--grow:hover {
+  transform: scale(1.14);
+}
+
+.nx-hover--shrink:hover {
+  transform: scale(0.94);
+}
+
+.nx-hover--tilt:hover {
+  transform: rotate(-3deg);
+}
+
+.nx-hover--lean:hover {
+  transform: skewX(-7deg);
+}
+
+.nx-hover--rise:hover {
+  transform: translateY(-7px);
+}
+
+.nx-hover--slide:hover {
+  transform: translateX(7px);
+}
+
+.nx-hover--glow:hover {
+  box-shadow: 0 0 0 3px var(--nx-surface), 0 0 26px 2px var(--c-hover-glow, var(--nx-accent));
+  filter: saturate(1.2) var(--c-filter,);
+}
+
+.nx-hover--invert:hover {
+  background-color: var(--c-hover-bg, var(--nx-ink)) !important;
+  color: var(--c-hover-fg, var(--nx-surface)) !important;
+}
+
+.nx-hover--border-flash:hover {
+  border-color: var(--c-hover-border, var(--nx-accent)) !important;
+  border-width: max(var(--c-bd-w, 2px), 3px);
+}
+
+.nx-hover--shadow-swap:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: -5px -5px 0 0 var(--c-hover-border, var(--nx-accent));
+}
+
+.nx-hover--blur-out:hover {
+  filter: blur(2.5px) var(--c-filter,);
+}
+
+.nx-hover--sharpen {
+  filter: blur(2px) var(--c-filter,);
+}
+
+.nx-hover--sharpen:hover {
+  filter: blur(0) var(--c-filter,);
+}
+
+.nx-hover--jiggle:hover {
+  animation: nx-jiggle 480ms var(--nx-ease) 1;
+}
+
+.nx-hover--underline {
+  position: relative;
+}
+
+.nx-hover--underline::after {
+  content: "";
+  position: absolute;
+  left: var(--nx-ctl-pad-x, 12px);
+  right: var(--nx-ctl-pad-x, 12px);
+  bottom: 4px;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--nx-dur) var(--nx-ease);
+}
+
+.nx-hover--underline:hover::after {
+  transform: scaleX(1);
+}
+
+.nx-hover--sweep {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.nx-hover--sweep::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--c-hover-bg, var(--nx-accent));
+  transform: translateX(-101%);
+  transition: transform var(--nx-dur-slow) var(--nx-ease);
+}
+
+.nx-hover--sweep:hover::before {
+  transform: translateX(0);
+}
+
+.nx-hover--sweep:hover {
+  color: var(--c-hover-fg, var(--nx-on-accent)) !important;
+}
+
+/* ---------------------------------------------------- keyframe animations */
+.nx-anim {
+  animation-duration: var(--c-anim-dur, 1200ms);
+  animation-iteration-count: infinite;
+  animation-timing-function: var(--nx-ease);
+}
+
+.nx-anim--none {
+  animation: none;
+}
+
+.nx-anim--pulse {
+  animation-name: nx-pulse;
+}
+
+.nx-anim--float {
+  animation-name: nx-float;
+  animation-duration: 2600ms;
+  animation-timing-function: ease-in-out;
+}
+
+.nx-anim--bob {
+  animation-name: nx-bob;
+  animation-timing-function: ease-in-out;
+}
+
+.nx-anim--wiggle {
+  animation-name: nx-wiggle;
+  animation-timing-function: ease-in-out;
+}
+
+.nx-anim--shine {
+  animation-name: nx-shine;
+  animation-duration: 2000ms;
+  animation-timing-function: linear;
+}
+
+.nx-anim--breathe {
+  animation-name: nx-breathe;
+  animation-duration: 3000ms;
+  animation-timing-function: ease-in-out;
+}
+
+.nx-anim--nudge {
+  animation-name: nx-nudge;
+  animation-duration: 900ms;
+}
+
+/* ------------------------------------------------------------- keyframes */
+@keyframes nx-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@keyframes nx-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -9px;
+  }
+}
+
+@keyframes nx-bob {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 4px;
+  }
+}
+
+@keyframes nx-wiggle {
+  0%,
+  100% {
+    rotate: 0deg;
+  }
+  25% {
+    rotate: -3.5deg;
+  }
+  75% {
+    rotate: 3.5deg;
+  }
+}
+
+@keyframes nx-shine {
+  0% {
+    background-position: -220% 0;
+  }
+  100% {
+    background-position: 220% 0;
+  }
+}
+
+@keyframes nx-breathe {
+  0%,
+  100% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.045;
+  }
+}
+
+@keyframes nx-nudge {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  30% {
+    translate: 6px 0;
+  }
+  60% {
+    translate: -3px 0;
+  }
+}
+
+@keyframes nx-jiggle {
+  0% {
+    rotate: 0deg;
+  }
+  20% {
+    rotate: -6deg;
+  }
+  45% {
+    rotate: 5deg;
+  }
+  70% {
+    rotate: -3deg;
+  }
+  100% {
+    rotate: 0deg;
+  }
+}
+
+/* ----------------------------------------------------------- scroll rail */
+.nx-scroll-rail {
+  scrollbar-width: thin;
+  scrollbar-color: var(--nx-line) transparent;
+}
+
+.nx-scroll-rail::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+
+.nx-scroll-rail::-webkit-scrollbar-track {
+  background: var(--nx-surface-3);
+  border: 2px solid var(--nx-line);
+}
+
+.nx-scroll-rail::-webkit-scrollbar-thumb {
+  background: var(--nx-line);
+}
+
+/* ------------------------------------------------------------ utilities */
+.nx-checker {
+  background-color: var(--nx-surface-3);
+  background-image: linear-gradient(45deg, var(--nx-grid-line) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--nx-grid-line) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--nx-grid-line) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--nx-grid-line) 75%);
+  background-size: 22px 22px;
+  background-position: 0 0, 0 11px, 11px -11px, -11px 0;
+}
+
+.nx-dots {
+  background-image: radial-gradient(var(--nx-grid-line) 1.4px, transparent 1.4px);
+  background-size: 18px 18px;
+}
+
+.nx-rule {
+  border: 0;
+  border-top: var(--nx-bw) solid var(--nx-line);
+}
