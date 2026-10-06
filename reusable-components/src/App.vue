@@ -67,7 +67,7 @@
       <AuthPage v-else-if="currentView === 'auth'" />
     </main> -->
 
-    <h4>Example01Interpolation</h4>
+    <!-- <h4>Example01Interpolation</h4>
     <Example01Interpolation />
     <hr />
     <br />
@@ -146,6 +146,14 @@
     <Example17Time />
     <hr />
     <br />
+
+    <h4>Example18InjectComponentsViaCode</h4>
+    <Example18InjectComponentsViaCode />
+    <hr />
+    <br /> -->
+
+    <h4>Router View</h4>
+    <router-view />
   </div>
 </template>
 
@@ -174,6 +182,7 @@ import Example14Requisitions from "./components/simple-studies/Example14Requisit
 import Example15LifeCycle2 from "./components/simple-studies/Example15LifeCycle2.vue";
 import Example16EmitParent from "./components/simple-studies/Example16EmitParent.vue";
 import Example17Time from "./components/simple-studies/Example17Time.vue";
+import Example18InjectComponentsViaCode from "./components/simple-studies/Example18InjectComponentsViaCode.vue";
 
 // const currentView = ref("showcase");
 
