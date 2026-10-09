@@ -52,47 +52,51 @@ const { boards, loading, error, removingId, remove } = useBoards();
 <template>
   <b-row>
     <b-col cols="12">
-        <h2>
-            Board list
-            <router-link to="/add-board">(Add Board)</router-link>
-        </h2>
-        <b-table stripped hover :items="boards" :fields="fields">
-            <template v-slot:cell(actions)="data">
-                <b-button @click.stop="details(data.item)" variant="primary">Details</b-button>
-            </template>
-        </b-table>
+      <h2>
+        Board list
+        <router-link to="/add-board">(Add Board)</router-link>
+      </h2>
+      <b-table stripped hover :items="boards" :fields="fields">
+        <template v-slot:cell(actions)="data">
+          <b-button @click.stop="details(data.item)" variant="primary"
+            >Details</b-button
+          >
+        </template>
+      </b-table>
     </b-col>
   </b-row>
 </template>
 
 <script>
-import { db } from '@/firebase';
-import { collection, onSnapshot } from 'firebase/firestore';
-import { useRouter } from 'vue-router';
+import { db } from "@/firebase";
+import { collection, onSnapshot } from "firebase/firestore";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
 
 export default {
-  name: 'BoardList',
+  name: "BoardList",
   data() {
     return {
       fields: [
-        { key: 'title', label: 'Title' },
-        { key: 'actions', label: 'Actions' }
+        { key: "title", label: "Title" },
+        { key: "actions", label: "Actions" },
+        { key: "createdTime", label: "Created at:" },
       ],
       boards: [],
       errors: [],
       unsubscribe: null,
-    }
+    };
   },
   created() {
-    const colRef = collection(db, 'boards');
+    const colRef = collection(db, "boards");
     this.unsubscribe = onSnapshot(colRef, (querySnapshot) => {
       this.boards = [];
       querySnapshot.forEach((doc) => {
         this.boards.push({
           key: doc.id,
           title: doc.data().title,
+          createdTime: doc.data().createdAt?.toDate().toLocaleString(),
         });
       });
     });
@@ -102,15 +106,15 @@ export default {
   },
   methods: {
     details(board) {
-      this.$router.push({ name: 'ShowBoard', params: { id: board.key } });
-    }
-  }
-}
+      this.$router.push({ name: "ShowBoard", params: { id: board.key } });
+    },
+  },
+};
 </script>
 
 <style>
-.table{
-    width: 96%;
-    margin: 0 auto;
+.table {
+  width: 96%;
+  margin: 0 auto;
 }
 </style>
