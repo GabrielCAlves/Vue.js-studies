@@ -1,0 +1,299 @@
+A combinação de Vue 3 com Firebase (Firestore, Realtime Database e Authentication) permite construir aplicações full-stack completas sem gerenciar um backend próprio. Abaixo estão os componentes fundamentais organizados por área funcional.
+
+🚀 Configuração Inicial do Firebase
+Toda integração começa com a inicialização centralizada do Firebase em um módulo dedicado, evitando chamadas duplicadas de initializeApp.
+
+js
+// src/firebase.js
+import { initializeApp } from 'firebase/app'
+import { getFirestore } from 'firebase/firestore'
+import { getAuth } from 'firebase/auth'
+import { getDatabase } from 'firebase/database'
+
+const firebaseConfig = {
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: "seu-projeto.firebaseapp.com",
+  projectId: "seu-projeto-id",
+  storageBucket: "seu-projeto.appspot.com",
+  messagingSenderId: "000000000000",
+  appId: "1:000000000000:web:xxxxx"
+}
+
+const app = initializeApp(firebaseConfig)
+
+export const db = getFirestore(app)        // Firestore
+export const auth = getAuth(app)           // Authentication
+export const rtdb = getDatabase(app)       // Realtime Database
+Boas práticas: armazene as credenciais em variáveis de ambiente (.env), nunca no código-fonte.
+
+📦 Firestore (Banco NoSQL)
+🔹 Leitura em Tempo Real com onSnapshot
+Firestore oferece real-time através de onSnapshot, que estabelece uma conexão persistente (não polling).
+
+vue
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { collection, onSnapshot } from 'firebase/firestore'
+import { db } from '@/firebase'
+
+const produtos = ref([])
+let unsubscribe = null
+
+onMounted(() => {
+  unsubscribe = onSnapshot(collection(db, 'produtos'), (snapshot) => {
+    produtos.value = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }))
+  })
+})
+
+onBeforeUnmount(() => {
+  if (unsubscribe) unsubscribe()
+})
+</script>
+Ponto crítico: sempre armazene e chame a função de unsubscribe no onBeforeUnmount para evitar memory leaks e listeners duplicados.
+
+🔹 CRUD Completo (Create, Read, Update, Delete)
+js
+import {
+  collection, doc, addDoc, getDoc, getDocs,
+  updateDoc, deleteDoc, setDoc, serverTimestamp
+} from 'firebase/firestore'
+import { db } from '@/firebase'
+
+// CREATE
+const criarProduto = async (dados) => {
+  try {
+    await addDoc(collection(db, 'produtos'), {
+      ...dados,
+      criadoEm: serverTimestamp()
+    })
+  } catch (e) {
+    if (e.code === 'permission-denied') {
+      console.error('Sem permissão')
+    } else {
+      console.error('Erro:', e)
+    }
+  }
+}
+
+// READ (único)
+const buscarProduto = async (id) => {
+  const docRef = doc(db, 'produtos', id)
+  const snap = await getDoc(docRef)
+  return snap.exists() ? { id: snap.id, ...snap.data() } : null
+}
+
+// UPDATE (parcial)
+const atualizarProduto = async (id, dados) => {
+  const ref = doc(db, 'produtos', id)
+  await updateDoc(ref, dados)
+}
+
+// UPDATE (com merge, preserva campos)
+const atualizarComMerge = async (id, dados) => {
+  const ref = doc(db, 'produtos', id)
+  await setDoc(ref, dados, { merge: true })
+}
+
+// DELETE
+const deletarProduto = async (id) => {
+  await deleteDoc(doc(db, 'produtos', id))
+}
+Armadilha comum: setDoc sem { merge: true } sobrescreve o documento inteiro, apagando campos não enviados.
+
+🔹 Conversão de Dados (Timestamps)
+Objetos Timestamp do Firestore não são reativos. Converta antes de atribuir a ref:
+
+js
+produtos.value = snapshot.docs.map(doc => {
+  const data = doc.data()
+  return {
+    id: doc.id,
+    ...data,
+    criadoEm: data.criadoEm?.toDate() || null
+  }
+})
+🔄 Realtime Database (Alternativa)
+🔹 Leitura com onValue
+vue
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
+import { ref as dbRef, onValue } from 'firebase/database'
+import { rtdb } from '@/firebase'
+
+const posts = ref([])
+let unsubscribe = null
+
+onMounted(() => {
+  unsubscribe = onValue(dbRef(rtdb, 'posts'), (snapshot) => {
+    if (snapshot.exists()) {
+      posts.value = Object.entries(snapshot.val()).map(([id, data]) => ({
+        id,
+        ...data
+      }))
+    } else {
+      posts.value = []
+    }
+  })
+})
+
+onUnmounted(() => {
+  if (unsubscribe) unsubscribe()
+})
+</script>
+Atenção: ref do Firebase (@firebase/database) é diferente do ref do Vue — renomeie na importação para evitar conflito.
+
+🔹 Operações de Escrita
+Método	Uso	Comportamento
+set	Substituir nó inteiro	Sobrescreve tudo
+update	Escrita parcial	Mescla campos
+push	Chave única automática	Ideal para listas
+js
+import { ref as dbRef, set, update, push } from 'firebase/database'
+import { rtdb } from '@/firebase'
+
+// Substituir
+await set(dbRef(rtdb, `users/${uid}`), userData)
+
+// Atualização parcial
+await update(dbRef(rtdb, 'posts'), { [postId]: novoPost })
+
+// Push (chave automática)
+const novaRef = push(dbRef(rtdb, 'messages'))
+await set(novaRef, { texto: 'Olá', autor: 'Ana' })
+🔐 Authentication (Registro, Login, Logout)
+🔹 Composable de Autenticação
+A abordagem moderna usa Composition API com estado reativo e sincronização automática via onAuthStateChanged.
+
+js
+// composables/useAuth.js
+import { ref, onMounted } from 'vue'
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from 'firebase/auth'
+import { auth } from '@/firebase'
+
+export function useAuth() {
+  const user = ref(null)
+  const loading = ref(true)
+
+  const login = async (email, password) => {
+    try {
+      const result = await signInWithEmailAndPassword(auth, email, password)
+      user.value = result.user
+    } catch (error) {
+      throw error
+    }
+  }
+
+  const signup = async (email, password) => {
+    try {
+      const result = await createUserWithEmailAndPassword(auth, email, password)
+      user.value = result.user
+    } catch (error) {
+      throw error
+    }
+  }
+
+  const logout = async () => {
+    await signOut(auth)
+    user.value = null
+  }
+
+  onMounted(() => {
+    onAuthStateChanged(auth, (authUser) => {
+      user.value = authUser
+      loading.value = false
+    })
+  })
+
+  return { user, loading, login, signup, logout }
+}
+🔹 Formulário de Login/Registro
+vue
+<template>
+  <form @submit.prevent>
+    <input v-model="email" type="email" placeholder="Email" />
+    <input v-model="password" type="password" placeholder="Senha" />
+    <button @click="signIn">Entrar</button>
+    <button @click="signUp">Registrar</button>
+  </form>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import { useAuth } from '@/composables/useAuth'
+
+const { login, signup } = useAuth()
+const email = ref('')
+const password = ref('')
+
+const signIn = async () => {
+  if (!email.value || !password.value) return
+  await login(email.value, password.value)
+}
+
+const signUp = async () => {
+  if (!email.value || !password.value) return
+  await signup(email.value, password.value)
+}
+</script>
+🔹 Proteção de Rotas com Vue Router
+js
+// router/index.js
+import { createRouter, createWebHistory } from 'vue-router'
+import { auth } from '@/firebase'
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [
+    { path: '/login', component: Login, meta: { public: true } },
+    { path: '/dashboard', component: Dashboard, meta: { requiresAuth: true } }
+  ]
+})
+
+router.beforeEach((to, from, next) => {
+  const user = auth.currentUser
+  if (to.meta.requiresAuth && !user) {
+    next('/login')
+  } else if (to.meta.public && user) {
+    next('/dashboard')
+  } else {
+    next()
+  }
+})
+📊 Comparação: Firestore vs Realtime Database
+Aspecto	Firestore	Realtime Database
+Modelo	Documentos e coleções	JSON tree
+Queries	Ricas (where, orderBy, limit)	Limitadas
+Escalabilidade	Automática, multi-região	Manual
+Real-time	onSnapshot	onValue
+Offline	Suporte robusto	Suporte básico
+Ideal para	Apps complexos, queries	Dados simples, chat
+Escolha: Firestore para a maioria dos casos modernos; Realtime Database para estruturas simples com necessidade de baixa latência extrema.
+
+🛠️ Ferramentas Auxiliares
+🔹 VueFire
+Biblioteca que simplifica binding reativo entre Vue e Firebase, reduzindo boilerplate.
+
+🔹 VueUse Firebase
+Composables como useFirestore que retornam Ref reativos automaticamente.
+
+🔹 create-totistack
+CLI que gera scaffolding completo: CRUD, autenticação, Pinia, Vue Router e Tailwind.
+
+✅ Checklist de Boas Práticas
+Item	Descrição
+Unsubscribe	Sempre limpe listeners (onSnapshot/onValue) no onBeforeUnmount
+Conversão de dados	Converta Timestamp para Date antes de atribuir a ref
+Tratamento de erros	Use try/catch com verificação de e.code
+Merge em updates	Use { merge: true } quando quiser atualização parcial
+Emuladores	Isole configurações de desenvolvimento com import.meta.env.DEV
+Pinia para auth	Centralize estado de usuário em store para acesso global
+Proteção de rotas	Combine beforeEach com onAuthStateChanged

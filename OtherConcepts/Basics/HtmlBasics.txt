@@ -1,0 +1,234 @@
+1. Estrutura Básica de um Documento HTML
+html
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Título da Página</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <!-- Conteúdo visível -->
+  </body>
+</html>
+Componentes:
+
+<!DOCTYPE html> — Declaração do tipo de documento
+
+<html> — Elemento raiz
+
+<head> — Metadados da página
+
+<meta> — Informações sobre o documento
+
+<title> — Título da aba
+
+<link> — Vinculação de recursos externos
+
+<script> — Inclusão de JavaScript
+
+<style> — Estilos internos
+
+<body> — Corpo/conteúdo visível
+
+2. Componentes de Conteúdo (Elementos HTML)
+Texto
+<h1> a <h6> — Títulos
+
+<p> — Parágrafos
+
+<span> — Texto inline
+
+<br> — Quebra de linha
+
+<hr> — Linha horizontal
+
+<strong>, <em>, <b>, <i> — Ênfase
+
+Listas
+<ul> — Lista não ordenada
+
+<ol> — Lista ordenada
+
+<li> — Item de lista
+
+<dl>, <dt>, <dd> — Lista de definição
+
+Links e Mídia
+<a> — Links
+
+<img> — Imagens
+
+<video> — Vídeos
+
+<audio> — Áudio
+
+<picture> — Imagens responsivas
+
+Tabelas
+<table>, <tr>, <td>, <th>, <thead>, <tbody>, <tfoot>
+
+Formulários
+<form> — Formulário
+
+<input> — Campo de entrada
+
+<textarea> — Área de texto
+
+<button> — Botão
+
+<select>, <option> — Listas suspensas
+
+<label> — Rótulo
+
+<fieldset>, <legend> — Agrupamento
+
+Semânticos (HTML5)
+<header>, <nav>, <main>, <section>, <article>, <aside>, <footer>, <figure>, <figcaption>
+
+=================================================================================================
+
+1. Estrutura do Documento
+Componente	Função
+<!DOCTYPE html>	Declara que o documento é HTML5
+<html>	Elemento raiz que envolve todo o documento
+<head>	Contém metadados (não visíveis ao usuário)
+<body>	Contém todo o conteúdo visível da página
+2. Componentes da Linguagem (Conceitos)
+🔹 Tags (Etiquetas)
+São os "comandos" do HTML, escritos entre < >.
+
+html
+<p>Isso é um parágrafo</p>
+🔹 Elementos
+É o conjunto formado por tag de abertura + conteúdo + tag de fechamento.
+
+html
+<h1>Meu Título</h1>
+🔹 Atributos
+Informações extras dentro da tag de abertura.
+
+html
+<a href="https://exemplo.com" target="_blank">Link</a>
+href e target são atributos.
+
+🔹 Conteúdo
+O que fica entre as tags (texto, outras tags, mídia).
+
+🔹 Comentários
+Não aparecem na página.
+
+html
+<!-- Isso é um comentário -->
+🔹 Elementos Vazios (Self-closing)
+Não possuem conteúdo nem tag de fechamento.
+
+html
+<img src="foto.jpg" alt="Foto">
+<br>
+<hr>
+<input type="text">
+3. Categorias de Elementos HTML
+📄 Estruturais / Semânticos
+<header>, <nav>, <main>, <section>, <article>, <aside>, <footer>
+
+<div>, <span>
+
+📝 Texto
+<h1> a <h6> — Títulos
+
+<p> — Parágrafo
+
+<br> — Quebra de linha
+
+<hr> — Linha horizontal
+
+<strong>, <em>, <b>, <i>, <u>, <mark> — Ênfase e formatação
+
+<blockquote>, <q> — Citações
+
+<code>, <pre> — Código
+
+🔗 Links e Navegação
+<a> — Âncora / link
+
+<nav> — Menu de navegação
+
+🖼️ Mídia
+<img> — Imagem
+
+<video> — Vídeo
+
+<audio> — Áudio
+
+<picture> — Imagem responsiva
+
+<source> — Fonte de mídia
+
+<canvas> — Gráficos via script
+
+<svg> — Vetores
+
+📋 Listas
+<ul> — Lista não ordenada
+
+<ol> — Lista ordenada
+
+<li> — Item de lista
+
+<dl>, <dt>, <dd> — Lista de definição
+
+📊 Tabelas
+<table>, <thead>, <tbody>, <tfoot>
+
+<tr> — Linha
+
+<th> — Célula de cabeçalho
+
+<td> — Célula de dado
+
+<caption> — Título da tabela
+
+📝 Formulários
+<form> — Formulário
+
+<input> — Campo de entrada
+
+<label> — Rótulo
+
+<textarea> — Área de texto
+
+<button> — Botão
+
+<select>, <option> — Lista suspensa
+
+<fieldset>, <legend> — Agrupamento
+
+🧩 Interativos / Outros
+<iframe> — Incorporar outra página
+
+<script> — JavaScript
+
+<style> — CSS interno
+
+<link> — Recursos externos
+
+<meta> — Metadados
+
+<template> — Conteúdo reutilizável
+
+<details>, <summary> — Conteúdo expansível
+
+<dialog> — Caixa de diálogo
+
+4. Resumo dos Componentes-Chave
+text
+HTML = Tags + Atributos + Conteúdo
+Componente	Descrição
+Tag	Etiqueta delimitada por < >
+Elemento	Tag de abertura + conteúdo + fechamento
+Atributo	Propriedade dentro da tag
+Conteúdo	Texto ou outros elementos dentro da tag
+Comentário	<!-- --> (ignorado pelo navegador)
+Elemento vazio	Não tem conteúdo (ex.: <img>, <br>)

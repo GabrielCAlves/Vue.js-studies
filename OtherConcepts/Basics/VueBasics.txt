@@ -1,0 +1,137 @@
+Componentes Básicos da Linguagem Vue.js
+O Vue.js é um framework JavaScript progressivo para construção de interfaces, que estende o HTML padrão com uma sintaxe de template declarativa e um sistema de reatividade automática . Seus componentes fundamentais são:
+
+1. Componente de Arquivo Único (SFC — Single-File Component)
+A forma recomendada de escrever componentes Vue é através de arquivos .vue, que encapsulam template, lógica e estilos em um único arquivo .
+
+Bloco	Função
+<template>	Contém o markup HTML do componente
+<script>	Contém a lógica JavaScript (Composition API ou Options API)
+<style>	Contém os estilos CSS (pode ser escopado)
+vue
+<template>
+  <button @click="count++">{{ count }}</button>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+const count = ref(0)
+</script>
+
+<style scoped>
+button { color: blue; }
+</style>
+2. Estilos de API (API Styles)
+O Vue oferece duas formas de definir a lógica de um componente :
+
+🔹 Options API
+Usa um objeto de opções como data, methods, computed, mounted. As propriedades são acessadas via this.
+
+js
+export default {
+  data() {
+    return { count: 0 }
+  },
+  methods: {
+    increment() { this.count++ }
+  }
+}
+🔹 Composition API (recomendada com <script setup>)
+Usa funções importadas como ref, reactive, computed, onMounted. O <script setup> é açúcar sintático que elimina boilerplate .
+
+vue
+<script setup>
+import { ref, onMounted } from 'vue'
+const count = ref(0)
+onMounted(() => console.log('montado'))
+</script>
+3. Sistema de Reatividade
+O Vue rastreia automaticamente mudanças de estado e atualiza o DOM de forma eficiente .
+
+Componente	Descrição
+ref()	Cria um valor reativo (acessado via .value no JS, mas automaticamente desembrulhado no template)
+reactive()	Cria um objeto reativo
+computed()	Propriedade computada com cache automático
+watch() / watchEffect()	Observadores de mudanças reativas
+4. Diretivas (Directives)
+São atributos especiais com prefixo v- que aplicam comportamento reativo ao DOM .
+
+Diretiva	Função
+v-bind (ou :)	Vincula atributos dinamicamente a expressões
+v-on (ou @)	Escuta eventos DOM ou eventos customizados de componentes
+v-model	Cria binding bidirecional em inputs de formulário e componentes
+v-if / v-else / v-else-if	Renderização condicional
+v-show	Alterna visibilidade via CSS
+v-for	Renderiza listas baseadas em arrays ou objetos
+v-slot (ou #)	Define slots nomeados ou com escopo
+v-pre	Pula compilação (exibe mustaches literalmente)
+v-once	Renderiza apenas uma vez
+5. Props (Propriedades de Componente)
+Props são a forma de passar dados do componente pai para o filho. São declaradas com defineProps() no <script setup> ou com a opção props .
+
+vue
+<!-- Filho -->
+<script setup>
+const props = defineProps({
+  title: String,
+  count: Number
+})
+</script>
+
+<!-- Pai -->
+<MeuComponente title="Olá" :count="5" />
+6. Eventos (Emits)
+Componentes filhos comunicam-se com o pai emitindo eventos customizados, que o pai escuta com v-on ou @ .
+
+vue
+<!-- Filho -->
+<script setup>
+const emit = defineEmits(['enlarge-text'])
+emit('enlarge-text')
+</script>
+
+<!-- Pai -->
+<MeuComponente @enlarge-text="tamanho += 0.1" />
+7. Slots (Distribuição de Conteúdo)
+Slots permitem passar conteúdo do pai para dentro do template do filho, similar a elementos HTML nativos .
+
+Tipo	Descrição
+Slot padrão	<slot> como placeholder para conteúdo
+Slots nomeados	Múltiplos slots diferenciados por name
+Slots com escopo	Passam dados do filho de volta para o pai via props
+vue
+<!-- Filho -->
+<slot name="header" :user="usuario"></slot>
+
+<!-- Pai -->
+<template #header="{ user }">
+  <h1>{{ user.nome }}</h1>
+</template>
+8. Componentes Embutidos
+Componente	Função
+<component :is="...">	Alterna dinamicamente entre componentes
+<KeepAlive>	Mantém componentes inativos vivos ao alternar
+<Transition>	Aplica animações em entrada/saída
+<Teleport>	Move conteúdo para outra parte do DOM
+<Suspense>	Gerencia dependências assíncronas
+9. Ganchos de Ciclo de Vida (Lifecycle Hooks)
+Cada instância de componente passa por etapas: criação, montagem, atualização e desmontagem. Os hooks permitem executar lógica em cada fase .
+
+Options API	Composition API	Quando executa
+created	(sem equivalente direto)	Após criação da instância
+mounted	onMounted()	Após montagem no DOM
+updated	onUpdated()	Após atualização do DOM
+beforeUnmount	onBeforeUnmount()	Antes de desmontar
+unmounted	onUnmounted()	Após desmontar
+10. Resumo dos Componentes-Chave
+text
+Vue = Componente + Reatividade + Template Declarativo
+Componente	Descrição
+SFC	Arquivo .vue com template + script + style
+Ref / Reactive	Primitivas de estado reativo
+Props	Dados do pai para o filho
+Emits	Eventos do filho para o pai
+Slots	Conteúdo do pai dentro do filho
+Diretivas	Atributos v-* com comportamento reativo
+Lifecycle Hooks	Funções executadas em fases do ciclo de vida
+Computed / Watch	Derivações e observadores reativos
