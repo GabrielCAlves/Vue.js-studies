@@ -8,12 +8,6 @@ import router from "./router";
 import BootstrapVue3 from "bootstrap-vue-3";
 import "bootstrap/dist/css/bootstrap.css";
 
-import { Quasar } from "quasar";
-import "@quasar/extras/material-icons/material-icons.css";
-import "quasar/src/css/index.sass";
+import "./index.css"; // For Supabase project
 
-createApp(App)
-  .use(router)
-  .use(BootstrapVue3)
-  .use(Quasar, { plugins: {} })
-  .mount("#app");
+createApp(App).use(router).use(BootstrapVue3).mount("#app");

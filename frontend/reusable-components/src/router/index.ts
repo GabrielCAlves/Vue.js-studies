@@ -12,6 +12,7 @@ import ViewPatients from "../components/views/SpringBootCRUDWebApplication/ViewP
 const router = createRouter({
   history: createWebHistory(),
   routes: [
+    //================ Firebastore ===================
     // {
     //   path: '/',
     //   name: 'BoardList',
@@ -32,26 +33,46 @@ const router = createRouter({
     //   name: 'EditBoard',
     //   component: EditBoard,
     // },
+    //================== Springboot =========================
+    // {
+    //   path: "/",
+    //   name: "home",
+    //   component: ViewPatients,
+    // },
+    // {
+    //   path: "/add",
+    //   name: "add",
+    //   component: () =>
+    //     import(
+    //       "../components/views/SpringBootCRUDWebApplication/AddPatient.vue"
+    //     ),
+    // },
+    // {
+    //   path: "/edit/:id",
+    //   name: "edit",
+    //   component: () =>
+    //     import(
+    //       "../components/views/SpringBootCRUDWebApplication/UpdatePatient.vue"
+    //     ),
+    // },
+    //================= Supabase =====================
     {
       path: "/",
       name: "home",
-      component: ViewPatients,
+      component: () =>
+        import("../components/views/SupabaseCRUDWebApplication/Home.vue"),
     },
     {
-      path: "/add",
-      name: "add",
+      path: "/create",
+      name: "create",
       component: () =>
-        import(
-          "../components/views/SpringBootCRUDWebApplication/AddPatient.vue"
-        ),
+        import("../components/views/SupabaseCRUDWebApplication/Create.vue"),
     },
     {
-      path: "/edit/:id",
-      name: "edit",
+      path: "/:id",
+      name: "update",
       component: () =>
-        import(
-          "../components/views/SpringBootCRUDWebApplication/UpdatePatient.vue"
-        ),
+        import("../components/views/SupabaseCRUDWebApplication/Update.vue"),
     },
   ],
 });

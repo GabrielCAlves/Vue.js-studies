@@ -152,7 +152,18 @@
     <hr />
     <br /> -->
 
-    <h4>Router View</h4>
+    <!--Firebase-->
+    <!--Springboot-->
+    <!-- <h4>Router View</h4>
+    <router-view /> -->
+
+    <!--Supabase-->
+    <nav>
+      <h1>Supa Smoothies</h1>
+      <router-link to="/">Home</router-link>
+      <router-link to="/create">Create New Smoothie</router-link>
+    </nav>
+
     <router-view />
   </div>
 </template>
@@ -188,6 +199,8 @@
 // const currentView = ref("showcase");
 
 // const { user, isAuthenticated, logout } = useAuth();
+
+// console.log(process.env);
 </script>
 
 <style scoped>
