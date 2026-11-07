@@ -1,19 +1,12 @@
 <template>
   <div class="">
-    <form
-      action="https://gabrielcaportfolio.web.app"
-      @submit.prevent="ValidateForm"
-    >
-      <input type="submit" value="Send Form" />
-    </form>
+    <input type="text" @keydown.enter="Message" />
   </div>
 </template>
 
 <script setup lang="ts">
-function ValidateForm(event: { preventDefault: () => void }) {
-  alert("A form was sent");
-
-  event.preventDefault(); // Without this, the page will be reloaded or change to the site in the form action
+function Message() {
+  alert("Executing the Message function");
 }
 </script>
 
@@ -55,4 +48,28 @@ function ValidateForm(event: { preventDefault: () => void }) {
   }
 }
 */
+div {
+  display: grid;
+  gap: 0.65rem;
+}
+
+div::before {
+  color: #765d5d;
+  content: "Type a message and press Enter";
+  font-size: 0.88rem;
+}
+
+input {
+  box-sizing: border-box;
+  width: min(100%, 24rem);
+  min-height: 2.8rem;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid #e4caca;
+  border-radius: 0.55rem;
+}
+
+input:focus {
+  border-color: #c62828;
+  outline: 3px solid rgba(198, 40, 40, 0.15);
+}
 </style>

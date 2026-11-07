@@ -3,16 +3,19 @@
     "target": "esnext",
     "module": "esnext",
     "strict": true,
+    "noEmit": true,
     "jsx": "preserve",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
     "skipLibCheck": true,
     "sourceMap": true,
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"],
+      "bootstrap-vue-3": [
+        "./node_modules/bootstrap-vue-3/dist/BootstrapVue.d.ts"
+      ]
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
     "types": ["node", "webpack-env"]

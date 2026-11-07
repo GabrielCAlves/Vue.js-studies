@@ -58,3 +58,32 @@ onUnmounted(() => {
   console.log("Componente destruído");
 });
 </script>
+
+<style scoped>
+div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+p {
+  margin: 0;
+  padding: 0.8rem;
+  border: 1px solid #f0dddd;
+  border-radius: 0.6rem;
+  background: #fff8f7;
+  color: #493737;
+  line-height: 1.5;
+}
+
+p::first-letter {
+  color: #b4232d;
+  font-weight: 800;
+}
+
+@media (max-width: 480px) {
+  div {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+</style>

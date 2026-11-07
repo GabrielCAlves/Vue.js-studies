@@ -50,21 +50,37 @@ const { boards, loading, error, removingId, remove } = useBoards();
 </script> -->
 
 <template>
-  <b-row>
-    <b-col cols="12">
-      <h2>
-        Board list
-        <router-link to="/add-board">(Add Board)</router-link>
-      </h2>
-      <b-table stripped hover :items="boards" :fields="fields">
+  <div id="boardList" class="board-page">
+    <header class="board-page-header">
+      <div>
+        <span class="board-eyebrow">Firestore</span>
+        <h1>Boards</h1>
+        <p>Browse and manage your boards.</p>
+      </div>
+      <router-link class="board-primary-link" to="/add-board"
+        >Add board</router-link
+      >
+    </header>
+    <section class="board-table-card">
+      <b-table
+        striped
+        hover
+        responsive
+        :items="boards"
+        :fields="fields"
+        id="table"
+      >
         <template v-slot:cell(actions)="data">
-          <b-button @click.stop="details(data.item)" variant="primary"
+          <b-button
+            class="board-details-button"
+            @click.stop="details(data.item)"
+            variant="primary"
             >Details</b-button
           >
         </template>
       </b-table>
-    </b-col>
-  </b-row>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -112,9 +128,126 @@ export default {
 };
 </script>
 
-<style>
-.table {
-  width: 96%;
+<style scoped>
+.board-page {
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: clamp(2rem, 6vw, 5rem) clamp(1rem, 4vw, 3rem);
+  background:
+    radial-gradient(ellipse at 12% 12%, rgba(255, 170, 92, 0.2), transparent 34rem),
+    #faf6f2;
+}
+
+.board-page-header {
+  display: flex;
+  width: min(100%, 90rem);
+  align-items: end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin: 0 auto 1.75rem;
+}
+
+.board-eyebrow {
+  display: inline-block;
+  margin-bottom: 0.65rem;
+  color: #c45d12;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.board-page-header h1 {
+  margin: 0;
+  color: #29231e;
+  font-size: clamp(1.8rem, 5vw, 2.35rem);
+  font-weight: 750;
+  letter-spacing: -0.04em;
+}
+
+.board-page-header p {
+  margin: 0.65rem 0 0;
+  color: #756a60;
+  line-height: 1.6;
+}
+
+.board-primary-link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 1rem;
+  border-radius: 0.65rem;
+  background: #c45d12;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.board-primary-link:hover {
+  transform: translateY(-1px);
+  background: #a84c0b;
+  color: #fff;
+}
+
+.board-table-card {
+  width: min(100%, 90rem);
   margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid #eee4da;
+  border-radius: 1.1rem;
+  background: #fff;
+  box-shadow: 0 1.25rem 3.5rem rgba(69, 43, 20, 0.1);
+}
+
+:deep(#table) {
+  margin: 0;
+  --bs-table-bg: #fff;
+  --bs-table-color: #3f3a35;
+  --bs-table-striped-bg: #fbf6f1;
+  --bs-table-striped-color: #3f3a35;
+  --bs-table-hover-bg: #fff1e3;
+  --bs-table-hover-color: #3a3028;
+  --bs-table-border-color: #eee5dc;
+}
+
+:deep(#table th),
+:deep(#table td) {
+  padding: 1rem 1.1rem;
+  text-align: center;
+  vertical-align: middle;
+}
+
+:deep(#table thead th) {
+  background: #fbf6f1;
+  color: #65594e;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+:deep(.board-details-button) {
+  border-color: #c45d12;
+  background: #c45d12;
+  font-weight: 700;
+}
+
+:deep(.board-details-button:hover) {
+  border-color: #a84c0b;
+  background: #a84c0b;
+}
+
+@media (max-width: 600px) {
+  .board-page-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .board-primary-link {
+    align-self: flex-start;
+  }
 }
 </style>

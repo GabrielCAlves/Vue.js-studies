@@ -1,10 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 //FirestoreCRUDWebApplication
-// import BoardList from "../components/simple-studies/FirestoreCRUDWebApplication/BoardList.vue";
-// import ShowBoard from "../components/simple-studies/FirestoreCRUDWebApplication/ShowBoard.vue";
-// import AddBoard from "../components/simple-studies/FirestoreCRUDWebApplication/AddBoard.vue";
-// import EditBoard from "../components/simple-studies/FirestoreCRUDWebApplication/EditBoard.vue";
+import BoardList from "../components/simple-studies/FirestoreCRUDWebApplication/BoardList.vue";
+import ShowBoard from "../components/simple-studies/FirestoreCRUDWebApplication/ShowBoard.vue";
+import AddBoard from "../components/simple-studies/FirestoreCRUDWebApplication/AddBoard.vue";
+import EditBoard from "../components/simple-studies/FirestoreCRUDWebApplication/EditBoard.vue";
+import Everything from "../components/simple-studies/AIGeneratedAndFirebaseLoginSignUp/AIGeneratedAndLoginSignUp.vue";
+import Basics from "../components/simple-studies/AIGeneratedAndFirebaseLoginSignUp/Basics.vue";
 
 //SpringbootCRUDWebApplication
 import ViewPatients from "../components/views/SpringBootCRUDWebApplication/ViewPatients.vue";
@@ -12,53 +14,65 @@ import ViewPatients from "../components/views/SpringBootCRUDWebApplication/ViewP
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    //================ Firebastore ===================
-    // {
-    //   path: '/',
-    //   name: 'BoardList',
-    //   component: BoardList,
-    // },
-    // {
-    //   path: '/show-board/:id',
-    //   name: 'ShowBoard',
-    //   component: ShowBoard,
-    // },
-    // {
-    //   path: '/add-board',
-    //   name: 'AddBoard',
-    //   component: AddBoard,
-    // },
-    // {
-    //   path: '/edit-board/:id',
-    //   name: 'EditBoard',
-    //   component: EditBoard,
-    // },
-    //================== Springboot =========================
-    // {
-    //   path: "/",
-    //   name: "home",
-    //   component: ViewPatients,
-    // },
-    // {
-    //   path: "/add",
-    //   name: "add",
-    //   component: () =>
-    //     import(
-    //       "../components/views/SpringBootCRUDWebApplication/AddPatient.vue"
-    //     ),
-    // },
-    // {
-    //   path: "/edit/:id",
-    //   name: "edit",
-    //   component: () =>
-    //     import(
-    //       "../components/views/SpringBootCRUDWebApplication/UpdatePatient.vue"
-    //     ),
-    // },
-    //================= Supabase =====================
+    //================ AIGeneratedAndFirebaseLoginSignUp ===================
     {
       path: "/",
       name: "home",
+      component: Everything,
+    },
+    //================ AIGeneratedAndFirebaseLoginSignUp ===================
+    {
+      path: "/basics",
+      name: "basics",
+      component: Basics,
+    },
+    //================ Firestore ===================
+    {
+      path: "/firestore",
+      name: "BoardList",
+      component: BoardList,
+    },
+    {
+      path: "/show-board/:id",
+      name: "ShowBoard",
+      component: ShowBoard,
+    },
+    {
+      path: "/add-board",
+      name: "AddBoard",
+      component: AddBoard,
+    },
+    {
+      path: "/edit-board/:id",
+      name: "EditBoard",
+      component: EditBoard,
+    },
+    //================== Springboot =========================
+    {
+      path: "/springboot",
+      name: "springboothome",
+      component: ViewPatients,
+    },
+    {
+      path: "/add",
+      name: "add",
+      component: () =>
+        import(
+          "../components/views/SpringBootCRUDWebApplication/AddPatient.vue"
+        ),
+    },
+    {
+      path: "/edit/:id",
+      name: "edit",
+      component: () =>
+        import(
+          "../components/views/SpringBootCRUDWebApplication/UpdatePatient.vue"
+        ),
+    },
+    //================= Supabase =====================
+    {
+      path: "/supabase",
+      name: "supabasehome",
       component: () =>
         import("../components/views/SupabaseCRUDWebApplication/Home.vue"),
     },

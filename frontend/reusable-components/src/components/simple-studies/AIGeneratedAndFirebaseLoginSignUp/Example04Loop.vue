@@ -32,7 +32,7 @@ function AddText() {
   textTyped.value = "";
 }
 
-function alerta(event) {
+function alerta(event: any) {
   if (event.target.style.background == "white")
     event.target.style = "background: red";
   else event.target.style = "background: white";
@@ -77,4 +77,33 @@ function alerta(event) {
   }
 }
 */
+div {
+  color: #3b3030;
+}
+
+ul {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0.5rem 0 1rem;
+  padding-left: 1.25rem;
+}
+
+li {
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.4rem;
+}
+
+input {
+  box-sizing: border-box;
+  width: min(100%, 22rem);
+  min-height: 2.7rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #e4caca;
+  border-radius: 0.55rem;
+}
+
+input:focus {
+  border-color: #c62828;
+  outline: 3px solid rgba(198, 40, 40, 0.15);
+}
 </style>

@@ -1,16 +1,16 @@
 <template>
-  <div>
+  <div class="injection-demo">
     <h1>Example 18: Inject Components via Code</h1>
     <button @click="injectComponents">Inject Components</button>
     <div id="injected-components"></div>
-    <button @click="injectModal" class="modal">Inject Modal</button>
-    <button @click="injectSlider" class="improvedSlider">Inject Slider</button>
-    <button @click="injectCard" class="card">Inject Card</button>
-    <button @click="injectInfiniteSideScrollWithImageGalleryCarousel" class="imageGallery">Inject Image Gallery</button>
-    <button @click="injectForm" class="form">Inject Form</button>
-    <button @click="injectToDoList" class="toDoList">Inject To-Do List</button>
-    <button @click="injectColorPickerPanel" class="colorPicker">Inject Color Picker Panel</button>
-    <button @click="injectFormPicker" class="formPicker">Inject Form Picker</button>
+    <button @click="injectModal" class="inject-modal-button">Inject Modal</button>
+    <button @click="injectSlider" class="inject-slider-button">Inject Slider</button>
+    <button @click="injectCard" class="inject-card-button">Inject Card</button>
+    <button @click="injectInfiniteSideScrollWithImageGalleryCarousel" class="inject-gallery-button">Inject Image Gallery</button>
+    <button @click="injectForm" class="inject-form-button">Inject Form</button>
+    <button @click="injectToDoList" class="inject-todo-button">Inject To-Do List</button>
+    <button @click="injectColorPickerPanel" class="inject-color-button">Inject Color Picker Panel</button>
+    <button @click="injectFormPicker" class="inject-file-button">Inject Form Picker</button>
   </div>
 </template>
 
@@ -122,5 +122,118 @@ export default {
 </script>
 
 <style scoped>
+.injection-demo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+  color: #493737;
+}
 
+.injection-demo h1 {
+  width: 100%;
+  margin: 0 0 0.4rem;
+  color: #7f1d26;
+  font-size: 1.15rem;
+}
+
+.injection-demo > button {
+  min-height: 2.45rem;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid #c62828;
+  border-radius: 0.55rem;
+  background: #c62828;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.injection-demo > button:hover {
+  transform: translateY(-1px);
+  background: #a61f24;
+}
+
+#injected-components {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 0.8rem;
+}
+
+#injected-components :deep(.modal),
+#injected-components :deep(.slider),
+#injected-components :deep(.card),
+#injected-components :deep(.image-gallery),
+#injected-components :deep(.injected-form),
+#injected-components :deep(.todo-list),
+#injected-components :deep(.color-picker-panel),
+#injected-components :deep(.form-picker) {
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid #f0dddd;
+  border-radius: 0.7rem;
+  background: #fff8f7;
+  color: #493737;
+}
+
+#injected-components :deep(.modal) {
+  position: static;
+  width: auto;
+  height: auto;
+  z-index: auto;
+}
+
+#injected-components :deep(form) {
+  display: grid;
+  gap: 0.5rem;
+  max-width: none;
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid #f0dddd;
+  border-radius: 0.7rem;
+  background: #fff8f7;
+}
+
+#injected-components :deep(h2) {
+  margin: 0 0 0.7rem;
+  color: #8f2029;
+  font-size: 1rem;
+}
+
+#injected-components :deep(button) {
+  padding: 0.45rem 0.7rem;
+  border: 0;
+  border-radius: 0.45rem;
+  background: #c62828;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+}
+
+#injected-components :deep(input:not([type="range"]):not([type="color"])),
+#injected-components :deep(input[type="range"]) {
+  max-width: 100%;
+  accent-color: #c62828;
+}
+
+#injected-components :deep(.carousel) {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+}
+
+#injected-components :deep(img) {
+  width: min(45%, 8rem);
+  border-radius: 0.45rem;
+  object-fit: cover;
+}
+
+#injected-components :deep(ul) {
+  margin: 0;
+  padding-left: 1.2rem;
+}
 </style>

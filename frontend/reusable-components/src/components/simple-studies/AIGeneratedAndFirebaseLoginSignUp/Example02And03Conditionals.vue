@@ -57,4 +57,31 @@ function ShowHide() {
   }
 }
 */
+div {
+  display: grid;
+  justify-items: start;
+  gap: 0.85rem;
+}
+
+h1 {
+  margin: 0;
+  color: #7f1d26;
+  font-size: 1.25rem;
+}
+
+button {
+  min-height: 2.5rem;
+  padding: 0.55rem 0.9rem;
+  border: 0;
+  border-radius: 0.6rem;
+  background: #c62828;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+button:hover {
+  background: #a61f24;
+}
 </style>

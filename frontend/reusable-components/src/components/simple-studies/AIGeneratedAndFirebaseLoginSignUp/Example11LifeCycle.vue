@@ -1,13 +1,24 @@
 <template>
   <div class="">
-    <input type="text" @keydown.enter="Message" />
+    <h2>{{ text }}</h2>
   </div>
 </template>
 
 <script setup lang="ts">
-function Message() {
-  alert("Executing the Message function");
-}
+import { ref, onMounted, onBeforeUnmount } from "vue";
+
+let text = ref("Texto não alterado do Lifecycle.");
+
+// ===== Lifecycle Hooks =====
+onMounted(() => {
+  setTimeout(() => {
+    text.value = "Alteração de texto após 3 segundos!";
+  }, 3000);
+});
+
+onBeforeUnmount(() => {
+  console.log("Componente será desmontado");
+});
 </script>
 
 <style scoped>
@@ -48,4 +59,14 @@ function Message() {
   }
 }
 */
+h2 {
+  margin: 0;
+  padding: 0.9rem 1rem;
+  border-left: 4px solid #c62828;
+  border-radius: 0.5rem;
+  background: #fff4f3;
+  color: #7f1d26;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
 </style>

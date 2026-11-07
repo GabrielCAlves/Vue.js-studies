@@ -40,14 +40,11 @@
               status="online"
               size="xs"
             />
-            <span class="user-chip__email">{{ user?.displayName || user?.email }}</span>
+            <span class="user-chip__email">{{
+              user?.displayName || user?.email
+            }}</span>
           </div>
-          <NxButton
-            size="xs"
-            variant="ghost"
-            label="Logout"
-            @click="logout"
-          />
+          <NxButton size="xs" variant="ghost" label="Logout" @click="logout" />
         </template>
         <template v-else>
           <NxButton
@@ -65,9 +62,9 @@
     <!-- <main class="app-content">
       <ComponentShowcase v-if="currentView === 'showcase'" />
       <AuthPage v-else-if="currentView === 'auth'" />
-    </main> -->
+    </main>
 
-    <!-- <h4>Example01Interpolation</h4>
+    <h4>Example01Interpolation</h4>
     <Example01Interpolation />
     <hr />
     <br />
@@ -152,146 +149,177 @@
     <hr />
     <br /> -->
 
+    <!-- <Everything /> -->
+
     <!--Firebase-->
     <!--Springboot-->
     <!-- <h4>Router View</h4>
     <router-view /> -->
 
     <!--Supabase-->
-    <nav>
+    <!-- <nav>
       <h1>Supa Smoothies</h1>
       <router-link to="/">Home</router-link>
       <router-link to="/create">Create New Smoothie</router-link>
-    </nav>
+    </nav> -->
+
+    <div id="backend-btns">
+      <!-- <input type="checkbox" v-model="_isMarked" /> -->
+      <button @click="LoadAIGeneratedProject" id="aigenerated-btn">
+        AI Generated Project
+      </button>
+      <button @click="LoadBasics" id="basics-btn">Basics</button>
+      <button @click="LoadFireStoreProject" id="firestore-btn">
+        Firestore Backend
+      </button>
+      <button @click="LoadSpringBootProject" id="springboot-btn">
+        Springboot Backend
+      </button>
+      <button @click="LoadSupabaseProject" id="supabase-btn">
+        Supabase Backend
+      </button>
+    </div>
 
     <router-view />
   </div>
 </template>
 
 <script setup lang="ts">
-// import { ref } from "vue";
-// import NxIcon from "./components/ui/NxIcon.vue";
-// import NxBadge from "./components/ui/NxBadge.vue";
-// import NxAvatar from "./components/ui/NxAvatar.vue";
-// import NxButton from "./components/ui/NxButton.vue";
-// import ComponentShowcase from "./components/ComponentShowcase.vue";
-// import AuthPage from "./components/auth/AuthPage.vue";
+// Para rodar no backend, abra o terminal e execute os seguintes comandos:
+// cd backend
+// .\gradlew.bat bootRun
+
+import { ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import * as Everything from "./components/simple-studies/AIGeneratedAndFirebaseLoginSignUp/AIGeneratedAndLoginSignUp.vue";
+import * as Basics from "./components/simple-studies/AIGeneratedAndFirebaseLoginSignUp/Basics.vue";
+// import * as NxIconModule from "./components/ui/NxIcon.vue";
+// import * as NxBadgeModule from "./components/ui/NxBadge.vue";
+// import * as NxAvatarModule from "./components/ui/NxAvatar.vue";
+// import * as NxButtonModule from "./components/ui/NxButton.vue";
+// import * as ComponentShowcaseModule from "./components/ComponentShowcase.vue";
+// import * as AuthPageModule from "./components/auth/AuthPage.vue";
 // import { useAuth } from "./composables/useAuth";
 
-// import Example01Interpolation from "./components/simple-studies/Example01Interpolation.vue";
-// import Example02And03Conditionals from "./components/simple-studies/Example02And03Conditionals.vue";
-// import Example04Loop from "./components/simple-studies/Example04Loop.vue";
-// import Example05HTML from "./components/simple-studies/Example05HTML.vue";
-// import Example06VModel from "./components/simple-studies/Example06V-Model.vue";
-// import Example07Class from "./components/simple-studies/Example07Class.vue";
-// import Example08Click from "./components/simple-studies/Example08Click.vue";
-// import Example09Keyboard from "./components/simple-studies/Example09Keyboard.vue";
-// import Example10Submit from "./components/simple-studies/Example10Submit.vue";
-// import Example11LifeCycle from "./components/simple-studies/Example11LifeCycle.vue";
-// import Example12Props1 from "./components/simple-studies/Example12Props1.vue";
-// import Example13Routes from "./components/simple-studies/Example13Routes.vue";
-// import Example14Requisitions from "./components/simple-studies/Example14Requisitions.vue";
-// import Example15LifeCycle2 from "./components/simple-studies/Example15LifeCycle2.vue";
-// import Example16EmitParent from "./components/simple-studies/Example16EmitParent.vue";
-// import Example17Time from "./components/simple-studies/Example17Time.vue";
-// import Example18InjectComponentsViaCode from "./components/simple-studies/Example18InjectComponentsViaCode.vue";
+// import * as Example01InterpolationModule from "./components/simple-studies/AIGeneratedAndFirebaseLoginSignUp/Example01Interpolation.vue";
+// import * as Example02And03ConditionalsModule from "./components/simple-studies/AIGeneratedAndFirebaseLoginSignUp/Example02And03Conditionals.vue";
+// import * as Example04LoopModule from "./components/simple-studies/AIGeneratedAndFirebaseLoginSignUp/Example04Loop.vue";
+// import * as Example05HTMLModule from "./components/simple-studies/AIGeneratedAndFirebaseLoginSignUp/Example05HTML.vue";
+// import * as Example06VModelModule from "./components/simple-studies/AIGeneratedAndFirebaseLoginSignUp/Example06V-Model.vue";
+// import * as Example07ClassModule from "./components/simple-studies/AIGeneratedAndFirebaseLoginSignUp/Example07Class.vue";
+// import * as Example08ClickModule from "./components/simple-studies/AIGeneratedAndFirebaseLoginSignUp/Example08Click.vue";
+// import * as Example09KeyboardModule from "./components/simple-studies/AIGeneratedAndFirebaseLoginSignUp/Example09Keyboard.vue";
+// import * as Example10SubmitModule from "./components/simple-studies/AIGeneratedAndFirebaseLoginSignUp/Example10Submit.vue";
+// import * as Example11LifeCycleModule from "./components/simple-studies/AIGeneratedAndFirebaseLoginSignUp/Example11LifeCycle.vue";
+// import * as Example12Props1Module from "./components/simple-studies/AIGeneratedAndFirebaseLoginSignUp/Example12Props1.vue";
+// import * as Example13RoutesModule from "./components/simple-studies/AIGeneratedAndFirebaseLoginSignUp/Example13Routes.vue";
+// import * as Example14RequisitionsModule from "./components/simple-studies/AIGeneratedAndFirebaseLoginSignUp/Example14Requisitions.vue";
+// import * as Example15LifeCycle2Module from "./components/simple-studies/AIGeneratedAndFirebaseLoginSignUp/Example15LifeCycle2.vue";
+// import * as Example16EmitParentModule from "./components/simple-studies/AIGeneratedAndFirebaseLoginSignUp/Example16EmitParent.vue";
+// import * as Example17TimeModule from "./components/simple-studies/AIGeneratedAndFirebaseLoginSignUp/Example17Time.vue";
+// import Example18InjectComponentsViaCode from "./components/simple-studies/AIGeneratedAndFirebaseLoginSignUp/Example18InjectComponentsViaCode.vue";
+
+// const NxIcon = (NxIconModule as any).default;
+// const NxBadge = (NxBadgeModule as any).default;
+// const NxAvatar = (NxAvatarModule as any).default;
+// const NxButton = (NxButtonModule as any).default;
+// const ComponentShowcase = (ComponentShowcaseModule as any).default;
+// const AuthPage = (AuthPageModule as any).default;
+// const Example01Interpolation = (Example01InterpolationModule as any).default;
+// const Example02And03Conditionals = (Example02And03ConditionalsModule as any)
+//   .default;
+// const Example04Loop = (Example04LoopModule as any).default;
+// const Example05HTML = (Example05HTMLModule as any).default;
+// const Example06VModel = (Example06VModelModule as any).default;
+// const Example07Class = (Example07ClassModule as any).default;
+// const Example08Click = (Example08ClickModule as any).default;
+// const Example09Keyboard = (Example09KeyboardModule as any).default;
+// const Example10Submit = (Example10SubmitModule as any).default;
+// const Example11LifeCycle = (Example11LifeCycleModule as any).default;
+// const Example12Props1 = (Example12Props1Module as any).default;
+// const Example13Routes = (Example13RoutesModule as any).default;
+// const Example14Requisitions = (Example14RequisitionsModule as any).default;
+// const Example15LifeCycle2 = (Example15LifeCycle2Module as any).default;
+// const Example16EmitParent = (Example16EmitParentModule as any).default;
+
+// const Example17Time =
+//   (Example17TimeModule as any).default ?? Object.values(Example17TimeModule)[0];
 
 // const currentView = ref("showcase");
 
 // const { user, isAuthenticated, logout } = useAuth();
 
 // console.log(process.env);
+
+// const _isMarked = ref(false);
+// watch(_isMarked, (newValue) => {
+//   console.log("Checkbox marked:", newValue);
+// });
+
+const router = useRouter();
+
+function LoadAIGeneratedProject() {
+  router.push("/");
+}
+
+function LoadBasics() {
+  router.push("/basics");
+}
+
+function LoadFireStoreProject() {
+  router.push("/firestore");
+}
+
+function LoadSpringBootProject() {
+  router.push("/springboot");
+}
+
+function LoadSupabaseProject() {
+  router.push("/supabase");
+}
 </script>
 
 <style scoped>
-#app {
-  min-height: 100vh;
+#backend-btns {
   display: flex;
-  flex-direction: column;
-}
-
-.app-nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 24px;
-  background-color: var(--nx-surface);
-  border-bottom: 3px solid var(--nx-ink);
-  box-shadow: 0 4px 0 0 var(--nx-line-soft);
-}
-
-.app-nav__brand {
-  display: flex;
-  align-items: center;
+  justify-content: center;
   gap: 10px;
+  background-color: black;
+  padding: 30px 0;
+}
+
+#aigenerated-btn,
+#basics-btn,
+#firestore-btn,
+#springboot-btn,
+#supabase-btn {
+  padding: 10px 20px;
+  font-size: 16px;
   cursor: pointer;
-  user-select: none;
-}
-
-.app-nav__logo {
-  font-size: 1.25rem;
-  font-weight: 900;
-  letter-spacing: -0.02em;
-  color: var(--nx-ink);
-}
-
-.app-nav__links {
-  display: inline-flex;
-  gap: 4px;
-  padding: 4px;
-  background: var(--nx-surface-3);
-  border: 2px solid var(--nx-ink);
-}
-
-.nav-tab {
-  padding: 6px 16px;
-  font-family: inherit;
-  font-size: var(--nx-fs-xs);
-  font-weight: 800;
-  color: var(--nx-ink);
-  background: transparent;
   border: none;
-  cursor: pointer;
-  transition: background-color var(--nx-dur) var(--nx-ease),
-    color var(--nx-dur) var(--nx-ease);
+  border-radius: 5px;
+  color: white;
+  transition: background-color 0.3s;
 }
 
-.nav-tab--active {
-  background: var(--nx-ink);
-  color: var(--nx-surface);
+#aigenerated-btn {
+  background-color: #007bff;
 }
 
-.app-nav__user {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+#basics-btn {
+  background-color: red;
 }
 
-.user-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 4px 10px;
-  background: var(--nx-surface-3);
-  border: 1px solid var(--nx-ink);
-  border-radius: 999px;
-  cursor: pointer;
+#firestore-btn {
+  background-color: orange;
 }
 
-.user-chip__email {
-  font-size: var(--nx-fs-xs);
-  font-weight: 700;
-  color: var(--nx-ink);
-  max-width: 160px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+#springboot-btn {
+  background-color: lightgreen;
+  color: black;
 }
 
-.app-content {
-  flex: 1;
+#supabase-btn {
+  background-color: green;
 }
 </style>

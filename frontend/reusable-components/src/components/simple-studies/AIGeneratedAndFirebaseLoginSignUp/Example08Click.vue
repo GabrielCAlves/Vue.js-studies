@@ -1,12 +1,13 @@
 <template>
-  <div>
-    <div v-html="text"></div>
-    <p>{{ text }}</p>
+  <div class="">
+    <button @click="AlertMessage">Trigger Alert</button>
   </div>
 </template>
 
 <script setup lang="ts">
-let text = '<p style="color:red">Learning about v-html</p>';
+function AlertMessage() {
+  alert("Working with clicks.");
+}
 </script>
 
 <style scoped>
@@ -47,4 +48,26 @@ let text = '<p style="color:red">Learning about v-html</p>';
   }
 }
 */
+div {
+  display: flex;
+  align-items: center;
+}
+
+button {
+  min-height: 2.6rem;
+  padding: 0.6rem 1rem;
+  border: 0;
+  border-radius: 0.6rem;
+  background: #c62828;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  background: #a61f24;
+}
 </style>

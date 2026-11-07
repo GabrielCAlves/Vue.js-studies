@@ -50,4 +50,17 @@ let number2 = 24;
   }
 }
 */
+div {
+  color: #3b3030;
+  line-height: 1.65;
+}
+
+p {
+  margin: 0.35rem 0;
+}
+
+p:last-child {
+  color: #b4232d;
+  font-weight: 800;
+}
 </style>

@@ -79,6 +79,45 @@ onUnmounted(() => {
 });
 </script>
 
+<style scoped>
+div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  color: #493737;
+}
+
+p {
+  width: 100%;
+  margin: 0 0 0.35rem;
+  color: #7f1d26;
+  font-weight: 700;
+}
+
+button {
+  min-height: 2.4rem;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid #c62828;
+  border-radius: 0.55rem;
+  background: #c62828;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+button:hover {
+  border-color: #a61f24;
+  background: #a61f24;
+}
+
+#addButton {
+  border-color: #86232a;
+  background: #86232a;
+}
+</style>
+
 <!-- 
 Lifecycle Hooks in Vue 3 (Composition API):
 Options API (Vue 2/3)	    Composition API

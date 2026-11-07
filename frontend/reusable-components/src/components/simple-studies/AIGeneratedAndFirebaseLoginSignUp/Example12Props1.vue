@@ -29,3 +29,19 @@ function Message() {
   alert("Function created in Example12Props1");
 }
 </script>
+
+<style scoped>
+div {
+  display: grid;
+  gap: 1rem;
+}
+
+div :deep(> div) {
+  padding: 0.9rem 1rem;
+  border: 1px solid #f0dddd;
+  border-radius: 0.65rem;
+  background: #fff8f7;
+  color: #493737;
+  line-height: 1.6;
+}
+</style>

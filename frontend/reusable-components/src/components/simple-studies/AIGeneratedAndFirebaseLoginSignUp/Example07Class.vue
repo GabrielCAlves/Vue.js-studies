@@ -9,33 +9,18 @@
 
     red
     <input
-      @click="colorP($event.target.value)"
+      @click="colorP($event)"
       type="radio"
       name="color"
       value="red"
       checked
     />
     green
-    <input
-      @click="colorP($event.target.value)"
-      type="radio"
-      name="color"
-      value="green"
-    />
+    <input @click="colorP($event)" type="radio" name="color" value="green" />
     blue
-    <input
-      @click="colorP($event.target.value)"
-      type="radio"
-      name="color"
-      value="blue"
-    />
+    <input @click="colorP($event)" type="radio" name="color" value="blue" />
     yellow
-    <input
-      @click="colorP($event.target.value)"
-      type="radio"
-      name="color"
-      value="yellow"
-    />
+    <input @click="colorP($event)" type="radio" name="color" value="yellow" />
 
     <p :class="classParagraph">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum sed
@@ -71,8 +56,10 @@ function OnAndOff() {
   validation.value = !validation.value;
 }
 
-function colorP(cor: string) {
-  classParagraph.value = cor;
+function colorP(event: Event) {
+  if (event.target instanceof HTMLInputElement) {
+    classParagraph.value = event.target.value;
+  }
 }
 
 function vermelho() {
@@ -117,6 +104,37 @@ function incolor(this: any) {
 }
 .yellow {
   background-color: yellow;
+}
+
+div {
+  color: #3b3030;
+  line-height: 1.6;
+}
+
+p {
+  padding: 0.65rem 0.8rem;
+  border-radius: 0.5rem;
+}
+
+button {
+  min-height: 2.4rem;
+  margin: 0.25rem 0.35rem 0.25rem 0;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid #b4232d;
+  border-radius: 0.55rem;
+  background: #c62828;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+button:hover {
+  background: #a61f24;
+}
+
+input[type="radio"] {
+  accent-color: #c62828;
 }
 
 /* ===== Estilos Base (Mobile First) ===== */
